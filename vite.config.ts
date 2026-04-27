@@ -6,4 +6,8 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+// Use /Neruix/ as base path when building in GitHub Actions (for GitHub Pages project site).
+// Falls back to "/" for local development and previews.
+const base = process.env.GITHUB_ACTIONS ? "/Neruix/" : "/";
+
+export default defineConfig({ vite: { base } });
