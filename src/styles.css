@@ -1,0 +1,481 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Think Forward inspired design system — editorial, light, ambitious typography.
+ * All colors in oklch.
+ */
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 16px);
+  --radius-4xl: calc(var(--radius) + 28px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-highlight: var(--highlight);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Mono palette — white, black, yellow accent. Greys reserved for rules/dividers only. */
+  --background: oklch(1 0 0);              /* pure white */
+  --foreground: oklch(0 0 0);              /* pure black */
+  --ink: oklch(0 0 0);
+  --ink-soft: oklch(0.45 0 0);             /* mid-grey for secondary copy */
+  --cream: oklch(0.97 0 0);                /* near-white surface */
+  --rule: oklch(0.78 0 0);                 /* darker grey divider */
+  --highlight: oklch(0.92 0.18 100);       /* yellow accent */
+
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--ink);
+
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: var(--cream);
+  --secondary-foreground: var(--ink);
+  --muted: var(--cream);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--highlight);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.985 0.005 95);
+
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: oklch(0.5 0.02 60);
+}
+
+.dark {
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+  --ink: oklch(1 0 0);
+  --ink-soft: oklch(1 0 0);
+  --cream: oklch(0 0 0);
+  --rule: oklch(1 0 0);
+  --highlight: oklch(0.92 0.18 100);
+
+  --card: oklch(0 0 0);
+  --card-foreground: var(--ink);
+  --popover: oklch(0 0 0);
+  --popover-foreground: var(--ink);
+  --primary: oklch(1 0 0);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: var(--cream);
+  --secondary-foreground: var(--ink);
+  --muted: var(--cream);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--highlight);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: oklch(1 0 0);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    /* Smooth tonal transition when toggling themes (fallback for browsers
+       without View Transitions). */
+    transition:
+      background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1),
+      color 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+  }
+}
+
+/* Elegant theme switch via View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+/* Editorial display typography */
+.tf-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.tf-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.tf-rule {
+  border-top: 1px solid var(--rule);
+}
+
+/* Marquee */
+@keyframes tf-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.tf-marquee {
+  animation: tf-marquee 35s linear infinite;
+}
+
+/* Subtle blink for terminal cursor */
+@keyframes tf-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.tf-blink { animation: tf-blink 1s step-end infinite; }
+
+/* ===== Framer-style entrance animations ===== */
+
+/* Default reveal state — hidden until in-view */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.reveal-up   { transform: translateY(40px); }
+.reveal-down { transform: translateY(-24px); }
+.reveal-left { transform: translateX(40px); }
+.reveal-right{ transform: translateX(-40px); }
+.reveal-scale{ transform: scale(0.94); filter: blur(8px); }
+
+.reveal-up.is-in,
+.reveal-down.is-in,
+.reveal-left.is-in,
+.reveal-right.is-in { transform: translate(0, 0); }
+.reveal-scale.is-in { transform: scale(1); filter: blur(0); }
+
+/* Word/char stagger reveal for big headlines */
+.reveal-text > .tf-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  filter: blur(8px);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+  will-change: opacity, transform, filter;
+}
+.reveal-text.is-in > .tf-word {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Live counter — gentle scale-in tick */
+@keyframes tf-tick {
+  0%   { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0);   opacity: 1; }
+}
+.tf-tick { animation: tf-tick 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Hover micro-interactions */
+.tf-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tf-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.tf-link:hover::after {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.tf-link > .tf-arrow {
+  transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.tf-link:hover > .tf-arrow {
+  transform: translateX(6px);
+}
+
+.tf-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tf-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--highlight);
+  transform: translateY(101%);
+  transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  z-index: -1;
+}
+.tf-cta:hover::before { transform: translateY(0); }
+.tf-cta:hover { color: var(--ink); }
+.tf-cta:active { transform: scale(0.97); }
+
+.tf-card {
+  transition:
+    background-color 0.4s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tf-card:hover { transform: translateY(-4px); }
+
+/* Marquee pause on hover */
+.tf-marquee-wrap:hover .tf-marquee { animation-play-state: paused; }
+
+/* ===== Premium streaming text reveal (Chat) ===== */
+@keyframes tf-stream-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+}
+.tf-stream-word {
+  display: inline-block;
+  animation: tf-stream-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ===== Floating glow orbs (premium ambient bg) ===== */
+@keyframes tf-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(40px, -30px) scale(1.08); }
+  66%      { transform: translate(-30px, 20px) scale(0.95); }
+}
+.tf-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: tf-float 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ===== Editorial caret (chat input) ===== */
+@keyframes tf-caret { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+.tf-caret { animation: tf-caret 1s step-end infinite; }
+
+/* ===== Hover invert (replaces cream-hover, since cream is now white) ===== */
+.tf-invert-hover {
+  transition: background-color 0.35s cubic-bezier(0.16,1,0.3,1),
+              color 0.35s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.35s ease;
+}
+.tf-invert-hover:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+/* ===== Magnetic underline-grow link ===== */
+.tf-mag {
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.tf-mag:hover { transform: translateY(-2px); }
+
+/* ===== Slow tilt-in ===== */
+@keyframes tf-tilt-in {
+  from { opacity: 0; transform: perspective(1200px) rotateX(8deg) translateY(40px); filter: blur(10px); }
+  to   { opacity: 1; transform: perspective(1200px) rotateX(0) translateY(0); filter: blur(0); }
+}
+.tf-tilt-in { animation: tf-tilt-in 1s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ===== Highlight underline sweep on big titles ===== */
+@keyframes tf-sweep {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.tf-sweep::after {
+  content: "";
+  display: block;
+  height: 6px;
+  margin-top: 0.4em;
+  background: var(--highlight);
+  transform-origin: left;
+  animation: tf-sweep 1.4s cubic-bezier(0.7, 0, 0.3, 1) 0.4s both;
+}
+
+/* ===== Sticky scroll-stack cards (premium) ===== */
+.tf-stack-card { will-change: transform; }
+
+/* ===== Markdown prose for chat replies ===== */
+.tf-prose { color: var(--foreground); }
+.tf-prose > * + * { margin-top: 1.1em; }
+.tf-prose h1, .tf-prose h2, .tf-prose h3, .tf-prose h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-top: 1.6em;
+}
+.tf-prose h1 { font-size: 2rem; }
+.tf-prose h2 { font-size: 1.6rem; }
+.tf-prose h3 { font-size: 1.25rem; }
+.tf-prose h4 { font-size: 1.1rem; }
+.tf-prose p { line-height: 1.7; font-size: 1.05rem; }
+.tf-prose strong { font-weight: 600; color: var(--foreground); }
+.tf-prose em { font-style: italic; }
+.tf-prose ul, .tf-prose ol { padding-left: 1.4em; }
+.tf-prose ul { list-style: none; padding-left: 0; }
+.tf-prose ul > li { position: relative; padding-left: 1.4em; line-height: 1.7; }
+.tf-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.7em;
+  height: 1px;
+  background: var(--foreground);
+}
+.tf-prose ol { list-style: decimal; }
+.tf-prose ol > li { line-height: 1.7; padding-left: 0.25em; }
+.tf-prose li + li { margin-top: 0.45em; }
+.tf-prose a { color: var(--foreground); text-decoration: underline; text-underline-offset: 3px; }
+.tf-prose blockquote {
+  border-left: 2px solid var(--foreground);
+  padding-left: 1em;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.tf-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--cream);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.tf-prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 1.1em 1.3em;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+.tf-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+.tf-prose hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+
+/* ===== Shimmer skeleton (image gen loader) ===== */
+@keyframes tf-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.tf-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--foreground) 8%, transparent),
+    transparent
+  );
+  animation: tf-shimmer 1.8s ease-in-out infinite;
+}
+
+/* Pause heavy animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-text > .tf-word { transition: none; opacity: 1; transform: none; filter: none; }
+  .tf-marquee { animation: none; }
+  .tf-blink, .tf-caret { animation: none; }
+  .tf-orb { animation: none; }
+  .tf-stream-word { animation: none; opacity: 1; transform: none; filter: none; }
+  .tf-tilt-in { animation: none; opacity: 1; transform: none; filter: none; }
+  .tf-sweep::after { animation: none; transform: scaleX(1); }
+}
+
+
+/* Shiki override — clean transparent bg so it blends into our dark editor */
+.tf-shiki pre.shiki {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre;
+  overflow: visible;
+}
+.tf-shiki code { background: transparent !important; }
